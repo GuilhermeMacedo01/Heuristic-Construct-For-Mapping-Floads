@@ -27,6 +27,5 @@ print(df_solution[[
     "Custo (R$ mil)", "Coordenadas", "Prioridade"
 ]])
 
-# Exportar solução para CSV
 df_solution.to_csv("solution_viavel.csv", index=False)
 print("\nArquive ready'solution_viavel.csv'")

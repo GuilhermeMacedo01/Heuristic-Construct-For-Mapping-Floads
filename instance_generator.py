@@ -50,12 +50,9 @@ df = pd.DataFrame({
 df["Criticidade"] = np.random.randint(1, 6, size=len(df))       
 df["Impacto (m2)"] = np.random.randint(600, 1300, size=len(df))
 df["Custo (R$ mil)"] = np.random.randint(30, 70, size=len(df))
-df["Latitude"] = np.round(np.random.uniform(-22.9, -22.7, size=len(df)), 6)
-df["Longitude"] = np.round(np.random.uniform(-43.6, -43.4, size=len(df)), 6)
-df["Coordenadas"] = df["Latitude"].astype(str) + ", " + df["Longitude"].astype(str)
 
 df = df[
-    ["Bairro", "População", "Criticidade", "Impacto (m2)", "Custo (R$ mil)", "Coordenadas"]
+    ["Bairro", "População", "Criticidade", "Impacto (m2)", "Custo (R$ mil)"]
 ]
 
 csv_path = "nova_iguacu_dataset_heuristica.csv"

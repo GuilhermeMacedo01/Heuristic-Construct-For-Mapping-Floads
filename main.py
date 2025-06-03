@@ -8,14 +8,11 @@ print(df.columns.tolist())
 
 max_budget = 700 
 mean_budget = df["Custo (R$ mil)"].mean() # Calcula o custo médio por bairro
-limit_sewer = int(max_budget / mean_budget)
-
 print(f"\nOrçamento máximo: R$ {max_budget} mil")
 print(f"Custo médio por bairro: R$ {mean_budget:.2f} mil")
-print(f"Número máximo de bairros que podem ser atendidos: {limit_sewer}")
 
 df["Prioridade"] = (df["Impacto (m2)"] * df["Criticidade"]) / df["Custo (R$ mil)"]
-df["Prioridade"] = df["Prioridade"] * (1 + random.uniform(-0.1, 0.1))  # Adiciona variação de ±10%, pode-se alterar o valor para aumentar a variação
+df["Prioridade"] = df["Prioridade"] * (1 + random.uniform(-0.1, 0.1))  # Adiciona variação de ±10%
 
 df_sorted = df.sort_values(by="Prioridade", ascending=False)
 
@@ -24,7 +21,7 @@ total_cost = 0
 
 candidates = df_sorted.copy()
 
-while len(solution) < limit_sewer and not candidates.empty:
+while not candidates.empty:
     top_candidates = candidates.head(3)
     
     chosen = top_candidates.sample(n=1).iloc[0]
@@ -32,6 +29,8 @@ while len(solution) < limit_sewer and not candidates.empty:
     if total_cost + chosen["Custo (R$ mil)"] <= max_budget:
         solution.append(chosen)
         total_cost += chosen["Custo (R$ mil)"]
+    else:
+        break
     
     candidates = candidates[candidates.index != chosen.name]
 

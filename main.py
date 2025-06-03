@@ -6,7 +6,7 @@ df = pd.read_csv("nova_iguacu_dataset_heuristica.csv")
 print("\nColunas disponíveis no DataFrame:")
 print(df.columns.tolist())
 
-max_budget = 700 
+max_budget = 800 
 mean_budget = df["Custo (R$ mil)"].mean() # Calcula o custo médio por bairro
 print(f"\nOrçamento máximo: R$ {max_budget} mil")
 print(f"Custo médio por bairro: R$ {mean_budget:.2f} mil")
@@ -36,11 +36,17 @@ while not candidates.empty:
 
 df_solution = pd.DataFrame(solution)
 
+mean_cost_sewer = 20  # custo médio de um bueiro em mil reais
+df_solution["Qtd_Bueiros"] = (df_solution["Custo (R$ mil)"] / mean_cost_sewer).round().astype(int)
+
 print("\nSolução Otimizada - Heurística de Construção")
 print(df_solution[[
     "Bairro", "População", "Criticidade", "Impacto (m2)", 
-    "Custo (R$ mil)", "Prioridade"
+    "Custo (R$ mil)", "Qtd_Bueiros", "Prioridade"
 ]])
+
+print(f"\nTotal de bueiros a serem instalados: {df_solution['Qtd_Bueiros'].sum()}")
+print(f"Custo total da solução: R$ {total_cost:.2f} mil")
 
 df_solution.to_csv("solution_viavel.csv", index=False)
 print("\nArquivo salvo como 'solution_viavel.csv'") 

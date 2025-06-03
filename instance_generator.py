@@ -18,6 +18,7 @@ neighborhoods = [
     "Morro do Castro", "Morro do Escorrega", "Morro do Fogueteiro", "Morro do São João"
 ]
 
+# Bairros com população real
 real_population = {
     "Centro": 25806,
     "Bairro da Luz": 23823,

@@ -3,14 +3,19 @@ import random
 
 df = pd.read_csv("nova_iguacu_dataset_heuristica.csv")
 
-print("Colunas disponíveis no DataFrame:")
+print("\nColunas disponíveis no DataFrame:")
 print(df.columns.tolist())
 
-max_budget = 400 
-limit_sewer = 5
+max_budget = 700 
+mean_budget = df["Custo (R$ mil)"].mean() # Calcula o custo médio por bairro
+limit_sewer = int(max_budget / mean_budget)
+
+print(f"\nOrçamento máximo: R$ {max_budget} mil")
+print(f"Custo médio por bairro: R$ {mean_budget:.2f} mil")
+print(f"Número máximo de bairros que podem ser atendidos: {limit_sewer}")
 
 df["Prioridade"] = (df["Impacto (m2)"] * df["Criticidade"]) / df["Custo (R$ mil)"]
-df["Prioridade"] = df["Prioridade"] * (1 + random.uniform(-0.1, 0.1))  # Adiciona variação de ±10%
+df["Prioridade"] = df["Prioridade"] * (1 + random.uniform(-0.1, 0.1))  # Adiciona variação de ±10%, pode-se alterar o valor para aumentar a variação
 
 df_sorted = df.sort_values(by="Prioridade", ascending=False)
 

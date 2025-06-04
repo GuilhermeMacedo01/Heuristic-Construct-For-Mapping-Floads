@@ -53,7 +53,6 @@ python main.py
 No arquivo `main.py`:
 
 - `max_budget`: Orçamento máximo disponível (R$ mil)
-- `limit_sewer`: Número máximo de intervenções permitidas
 
 ## Saída
 
@@ -65,6 +64,7 @@ O programa gera um arquivo `solution_viavel.csv` contendo:
 - Impacto da intervenção
 - Custo
 - Prioridade calculada
+- Quantidade de Bueiros que serão instalados em cada bairros escolhido.
 
 ## Lógica da Heurística
 

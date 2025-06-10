@@ -3,19 +3,19 @@ import numpy as np
 from datetime import datetime
 
 neighborhoods = [
-    "Austin", "Belmonte", "Belo Vale", "Bento Ribeiro", "Biquinha", "Boa Esperança",
+    "Austin", "Belmonte", "Belo Vale", "Humanitá", "Biquinha", "Boa Esperança",
     "Botujuru", "Brás de Pina", "Cachoeira Grande", "Cabral", "Cabuçu", "Califórnia",
     "Centro", "Cidade Olímpica", "Coroado", "Da Prata", "Donana", "Dona Elvira",
     "Dona Eulália", "Engenheiro Pedreira", "Fazenda da República", "Gato Grande",
     "Geraldo", "Guarujá", "Jardim Guandu", "Jardim Toronto", "Lote XV", "Miguel Couto",
     "Montese", "Moquetá", "Nova Aurora", "Nova Belém", "Nova Era", "Nova Posse",
     "Parque Fluminense", "Parque Nova Iguaçu", "Parque Presidente Vargas",
-    "Pavuna", "Posse", "Quintino", "Riachão", "Riachinho", "Santa Eugênia",
-    "Santa Inês", "Santa Rita", "Santa Tereza", "São Bento", "Santo Antônio",
-    "Santo Elias", "Senador Camará", "Tingui", "Tingui Mirim", "Tinguá",
+    "Ceramica", "Posse", "Quintino", "Riachão", "Riachinho", "Santa Eugênia",
+    "Santa Inês", "Santa Rita", "Corumba", "São Bento", "Santo Antônio",
+    "Santo Elias", "Carmari", "Tingui", "Tingui Mirim", "Tinguá",
     "Três Bocas", "Vila de Cava", "Vila da Sapê", "Vila São João", "Vila Tinguá",
     "Vila União", "Zumbi", "Bairro da Luz", "Comendador Soares", "Morro do Barão",
-    "Morro do Castro", "Morro do Escorrega", "Morro do Fogueteiro", "Morro do São João"
+    "Morro do Castro", "Morro do Escorrega", "Morro do Fogueteiro", "Morro do São João",
 ]
 
 # Bairros com população real

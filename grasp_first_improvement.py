@@ -24,9 +24,6 @@ class GRASPSolver:
 
     def build_restricted_candidate_list(self, candidates: pd.DataFrame, max_budget: float) -> pd.DataFrame:
         """Constrói a lista de candidatos"""
-        if candidates.empty:
-            return pd.DataFrame()
-
         sorted_candidates = candidates.sort_values(by="Prioridade", ascending=False)
         
         min_priority = sorted_candidates["Prioridade"].min()
@@ -42,8 +39,6 @@ class GRASPSolver:
     def first_improvement(self, solution: List[pd.Series], candidates: pd.DataFrame, 
                          total_cost: float, max_budget: float) -> Tuple[List[pd.Series], float]:
         """Realiza a busca local First Improvement"""
-        if not solution:
-            return solution, total_cost
 
         improved = True
         while improved:
@@ -90,10 +85,6 @@ class GRASPSolver:
                     break
                     
                 available_candidates = rcl[~rcl.index.isin([item.name for item in solution])]
-                
-                if available_candidates.empty:
-                    break
-                    
                 chosen = available_candidates.sample(n=1).iloc[0]
                 
                 if total_cost + chosen["Custo (R$ mil)"] <= max_budget:
@@ -102,7 +93,7 @@ class GRASPSolver:
                 
                 candidates = candidates[candidates.index != chosen.name]
             
-            # Busca local
+            # Busca local de first improvement
             solution, total_cost = self.first_improvement(solution, df, total_cost, max_budget)
             
             if solution:
@@ -120,27 +111,23 @@ class GRASPSolver:
         return df_solution, self.best_total_cost, self.best_cost
 
 def main():
-    try:
-        start_time = time.time()
-        
+    try:        
         # Escolhe o dataset a ser utilizado
         #df = pd.read_csv("nova_iguacu_dataset_heuristica_100.csv")
-        df = pd.read_csv("nova_iguacu_dataset_heuristica_1000.csv") # Tempo de execução da ultima tentativa:  0:14:04
-        #df = pd.read_csv("nova_iguacu_dataset_heuristica_10000.csv")
-        
-        if df.empty:
-            print("Erro: O arquivo de entrada está vazio")
-            return
-            
-        required_columns = ["Bairro", "População", "Criticidade", "Impacto (m2)", "Custo (R$ mil)"]
-        missing_columns = [col for col in required_columns if col not in df.columns]
-        if missing_columns:
-            print(f"Erro: Colunas faltando no dataset: {missing_columns}")
-            return
-        
+        #df = pd.read_csv("nova_iguacu_dataset_heuristica_1000.csv") # Tempo de execução da ultima tentativa:  0:14:04
+        df = pd.read_csv("nova_iguacu_dataset_heuristica_10000.csv") # Tempo de execução da ultima tentativa:  18:51:12
+
+        """ Para o dataset de 10.000 instâncias, os dados obtidos foram:
+                            Total de bueiros a serem instalados: 36
+                            Custo total da solução: R$ 798.00 mil
+                            Valor da função objetivo: 39269.19.
+        """
+                    
         max_budget = 800
         alpha = 0.3
         max_iterations = 100
+
+        start_time = time.time()
         
         solver = GRASPSolver(alpha=alpha, max_iterations=max_iterations)
         solution, total_cost, objective_value = solver.solve(df, max_budget)

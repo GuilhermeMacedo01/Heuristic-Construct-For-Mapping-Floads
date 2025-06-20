@@ -226,12 +226,17 @@ def main():
             - Best Improvement:
                     * dataset 100   : Tempo de execução da ultima tentativa:  0:00:05
                     * dataset 1000  : Tempo de execução da ultima tentativa:  0:04:31
-                    * dataset 10000 : Tempo de execução da ultima tentativa:   
+                    * dataset 10000 : Tempo de execução da ultima tentativa:  3:21:31
 
         Para o dataset de 10.000 instâncias no first improvement, os dados obtidos foram:
                     *   Total de bueiros a serem instalados: 36
                     *   Custo total da solução: R$ 798.00 mil
                     *   Valor da função objetivo: 39269.19.
+
+        Para o dataset de 10.000 instâncias no best improvement, os dados obtidos foram:
+                    *   Total de bueiros a serem instalados: 36
+                    *   Custo total da solução: R$ 799.00 mil
+                    *   Valor da função objetivo: 39269.19
         """
                     
         max_budget = 800

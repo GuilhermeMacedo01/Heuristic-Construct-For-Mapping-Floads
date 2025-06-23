@@ -64,20 +64,17 @@ class GRASPSolver:
         return solution, total_cost
 
     def two_swap_improvement(self, solution: List[pd.Series], candidates: pd.DataFrame, 
-                         total_cost: float, max_budget: float) -> Tuple[List[pd.Series], float]:
-        """Realiza a busca local 2-swap: tenta trocar dois bairros da solução por dois fora dela"""
-
+                        total_cost: float, max_budget: float) -> Tuple[List[pd.Series], float]:
         if len(solution) < 2:
             return solution, total_cost
-        solution_indices = [item.name for item in solution]
-        outside_candidates = candidates[~candidates.index.isin(solution_indices)]
         improved = True
         iteration = 0
-        max_iterations = 1000  # Limite, pois estava demorando demais
-        last_objective = sum(item["Prioridade"] for item in solution)
+        max_iterations = 1000
         while improved and iteration < max_iterations:
             improved = False
             iteration += 1
+            solution_indices = [item.name for item in solution]
+            outside_candidates = candidates[~candidates.index.isin(solution_indices)]
             for i in range(len(solution)):
                 for j in range(i+1, len(solution)):
                     s1, s2 = solution[i], solution[j]
@@ -87,19 +84,17 @@ class GRASPSolver:
                         for idx2, c2 in outside_candidates.iterrows():
                             if idx1 >= idx2:
                                 continue
-                            if idx1 == idx2:
-                                continue
                             new_cost = total_cost - (s1_cost + s2_cost) + c1["Custo (R$ mil)"] + c2["Custo (R$ mil)"]
                             if new_cost <= max_budget:
                                 new_prio = c1["Prioridade"] + c2["Prioridade"]
                                 old_prio = s1_prio + s2_prio
                                 if new_prio > old_prio:
+                                    # Faz a troca e sai dos loops
                                     solution[i] = c1
                                     solution[j] = c2
                                     total_cost = new_cost
-                                    solution_indices = [item.name for item in solution]
-                                    outside_candidates = candidates[~candidates.index.isin(solution_indices)]
                                     improved = True
+                                    print(f"Iteração {iteration}: Objetivo = {sum(item['Prioridade'] for item in solution)}")
                                     break
                         if improved:
                             break
@@ -107,12 +102,8 @@ class GRASPSolver:
                         break
                 if improved:
                     break
-            current_objective = sum(item["Prioridade"] for item in solution)
-            print(f"Iteração {iteration}: Objetivo = {current_objective}")
-            if current_objective == last_objective:
+            if not improved:
                 print("Sem melhoria na função objetivo, encerrando busca local.")
-                break
-            last_objective = current_objective
         if iteration == max_iterations:
             print("Atingiu o número máximo de iterações no two_swap_improvement.")
         return solution, total_cost
@@ -208,9 +199,9 @@ def main():
     try:        
         # Escolhe o dataset a ser utilizado
         #df = pd.read_csv("solution_viavel.csv")
-        #df = pd.read_csv("nova_iguacu_dataset_heuristica_100.csv")
+        df = pd.read_csv("nova_iguacu_dataset_heuristica_100.csv")
         #df = pd.read_csv("nova_iguacu_dataset_heuristica_1000.csv")
-        df = pd.read_csv("nova_iguacu_dataset_heuristica_10000.csv")
+        #df = pd.read_csv("nova_iguacu_dataset_heuristica_10000.csv")
         """
         Resultados Obtidos:
             - First improvement:
@@ -219,7 +210,7 @@ def main():
                     * dataset 10000 : Tempo de execução da ultima tentativa:  18:51:12
 
             - Two swap:
-                    * dataset 100   : Tempo de execução da ultima tentativa:  
+                    * dataset 100   : Tempo de execução da ultima tentativa:  19:02:24
                     * dataset 1000  : Tempo de execução da ultima tentativa:
                     * dataset 10000 : Tempo de execução da ultima tentativa:   
             
@@ -248,7 +239,7 @@ def main():
             2 : two swap,
             3 : improvement 
         """
-        method_chosed = 3
+        method_chosed = 2
 
 
         start_time = time.time()

@@ -222,7 +222,7 @@ def main():
         Para o dataset de 10.000 instâncias no first improvement, os dados obtidos foram:
                     *   Total de bueiros a serem instalados: 36
                     *   Custo total da solução: R$ 798.00 mil
-                    *   Valor da função objetivo: 39269.19.
+                    *   Valor da função objetivo: 39258.19.
 
         Para o dataset de 10.000 instâncias no best improvement, os dados obtidos foram:
                     *   Total de bueiros a serem instalados: 36

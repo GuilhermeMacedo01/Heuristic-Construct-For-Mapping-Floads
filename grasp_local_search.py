@@ -69,7 +69,7 @@ class GRASPSolver:
             return solution, total_cost
         improved = True
         iteration = 0
-        max_iterations = 1000
+        max_iterations = 100
         while improved and iteration < max_iterations:
             improved = False
             iteration += 1
@@ -237,7 +237,7 @@ def main():
         """ Método de Busca Local a ser usado:
             1 : first improvement,
             2 : two swap,
-            3 : improvement 
+            3 : best improvement 
         """
         method_chosed = 2
 
